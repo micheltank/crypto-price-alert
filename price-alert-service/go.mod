@@ -6,10 +6,10 @@ require (
 	github.com/Netflix/go-env v0.0.0-20210215222557-e437a7e7f9fb
 	github.com/gin-gonic/gin v1.7.2
 	github.com/golang-migrate/migrate/v4 v4.14.1
-	github.com/golang/mock v1.6.0 // indirect
+	github.com/golang/mock v1.6.0
 	github.com/golang/protobuf v1.5.2
 	github.com/lib/pq v1.10.2
-	github.com/onsi/gomega v1.14.0 // indirect
+	github.com/onsi/gomega v1.14.0
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.7.0
 	google.golang.org/grpc v1.33.1

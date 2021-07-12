@@ -41,7 +41,7 @@ func (app *App) Run() <-chan error {
 	out := make(chan error)
 	go func() {
 		for {
-			err := app.service.Execute()
+			_, err := app.service.Execute()
 			if err != nil {
 				out <- errors.Wrap(err, "failed to execute job")
 			}

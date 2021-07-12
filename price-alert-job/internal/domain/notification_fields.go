@@ -6,6 +6,14 @@ type EmailNotificationFields struct {
 	currency     string
 }
 
+func NewEmailNotificationFields(triggerPrice, currentPrice float64, currency string) EmailNotificationFields {
+	return EmailNotificationFields{
+		triggerPrice: triggerPrice,
+		currentPrice: currentPrice,
+		currency:     currency,
+	}
+}
+
 func (e EmailNotificationFields) GetTriggerPrice() float64 {
 	return e.triggerPrice
 }

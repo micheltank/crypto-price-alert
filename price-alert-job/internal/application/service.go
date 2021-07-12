@@ -7,7 +7,7 @@ import (
 )
 
 type IService interface {
-	Execute() error
+	Execute() (int, error)
 }
 
 type Service struct {
@@ -25,25 +25,27 @@ func NewService(priceApi domain.PriceApi, alertApi domain.AlertApi, notification
 	return &s
 }
 
-func (s *Service) Execute() error {
+func (s *Service) Execute() (int, error) {
 	logrus.Info("Executing job")
+	processedItems := 0
 	for _, coin := range domain.SupportedCoins {
 		price, err := s.priceApi.GetPrice(coin)
 		if err != nil {
-			return errors.Wrap(err, "failed to get price")
+			return 0, errors.Wrap(err, "failed to get price")
 		}
 		alerts, err := s.alertApi.GetAlerts(coin, price.USD)
 		if err != nil {
-			return errors.Wrap(err, "failed to get alerts")
+			return 0, errors.Wrap(err, "failed to get alerts")
 		}
-		s.buildAndSendNotificationForAll(alerts, price)
+		notificationsSent := s.buildAndSendNotificationForAll(alerts, price)
+		processedItems = processedItems + notificationsSent
 	}
-	return nil
+	return processedItems, nil
 }
 
-func (s *Service) buildAndSendNotificationForAll(alerts domain.Alerts, price domain.Price) {
+func (s *Service) buildAndSendNotificationForAll(alerts domain.Alerts, price domain.Price) int {
 	errs := make(chan error, 1)
-
+	processedItems := 0
 	for _, alert := range alerts {
 		template := domain.TemplateBelow
 		if alert.GetDirection() == domain.DirectionAbove {
@@ -54,7 +56,9 @@ func (s *Service) buildAndSendNotificationForAll(alerts domain.Alerts, price dom
 		go func(alertToSend domain.Alert) {
 			errs <- s.sendEmail(notification, alertToSend, price)
 		}(alert)
+		processedItems++
 	}
+	return processedItems
 	// TODO: DLQ
 }
 

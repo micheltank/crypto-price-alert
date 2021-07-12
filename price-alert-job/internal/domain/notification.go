@@ -40,11 +40,3 @@ func NewEmailNotification(email string, template EmailNotificationTemplate, fiel
 		fields:         fields,
 	}
 }
-
-func NewEmailNotificationFields(triggerPrice, currentPrice float64, currency string) EmailNotificationFields {
-	return EmailNotificationFields{
-		triggerPrice: triggerPrice,
-		currentPrice: currentPrice,
-		currency:     currency,
-	}
-}

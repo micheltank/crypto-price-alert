@@ -1,7 +1,8 @@
-package application
+package application_test
 
 import (
 	"github.com/golang/mock/gomock"
+	"github.com/micheltank/crypto-price-alert/price-alert-service/internal/application"
 	mock_domain "github.com/micheltank/crypto-price-alert/price-alert-service/internal/application/mock"
 	"github.com/micheltank/crypto-price-alert/price-alert-service/internal/domain"
 	. "github.com/onsi/gomega"
@@ -24,7 +25,7 @@ func TestAlertService(t *testing.T) {
 	t.Run("Regular alert creation", func(t *testing.T) {
 		g := NewGomegaWithT(t)
 
-		service := NewService(repository)
+		service := application.NewService(repository)
 		expectedEmail := "john@gmail.com"
 		command := domain.CreateAlertCommand{
 			Email:     expectedEmail,
@@ -43,7 +44,7 @@ func TestAlertService(t *testing.T) {
 	t.Run("Invalid alert creation", func(t *testing.T) {
 		g := NewGomegaWithT(t)
 
-		service := NewService(repository)
+		service := application.NewService(repository)
 		command := domain.CreateAlertCommand{
 			Email:     "invalid.email",
 			Price:     100,
