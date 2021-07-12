@@ -25,6 +25,7 @@ I opted out to overengineering this project in order to demonstrate some concept
 
 ## TODO's
 
+- Implement DLQ (Dead Letter Queue)
 - Finish graceful shutdown implementation
 - Implement better test coverage
 - To be production ready, must follow 12-factor app, such as:

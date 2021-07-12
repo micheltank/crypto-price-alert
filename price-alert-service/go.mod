@@ -12,5 +12,4 @@ require (
 	github.com/sirupsen/logrus v1.7.0
 	google.golang.org/grpc v1.33.1
 	google.golang.org/protobuf v1.25.0
-	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 )
