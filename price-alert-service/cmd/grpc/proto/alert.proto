@@ -1,0 +1,28 @@
+syntax = "proto3";
+package pb;
+option go_package = ".pb";
+
+message Alert {
+  int64 id = 1;
+  string email = 2;
+  double price = 3;
+  string coin = 4;
+  enum Direction {
+    ABOVE = 0;
+    BELOW = 1;
+  };
+  Direction direction = 5;
+}
+
+message GetAlertsParams {
+  string coin = 1;
+  double price = 2;
+}
+
+message Alerts {
+  repeated Alert alert = 1;
+}
+
+service AlertHandler {
+  rpc GetAlerts (GetAlertsParams) returns (Alerts);
+}
