@@ -13,7 +13,7 @@ I opted out to overengineering this project in order to demonstrate some concept
 
 ## Commands
 
-- for run application asap you can use docker-compose, as the images are already builded and uploaded to docker hub:
+- for run application asap you can use docker-compose, as the images have already been built and uploaded to docker hub:
 ```shell
     make docker_compose
 ```
@@ -27,6 +27,7 @@ I opted out to overengineering this project in order to demonstrate some concept
 
 - Implement DLQ (Dead Letter Queue)
 - Finish graceful shutdown implementation
+- Implement better api error treatment
 - Implement better test coverage
 - To be production ready, must follow 12-factor app, such as:
   - separate codebase (the three projects)

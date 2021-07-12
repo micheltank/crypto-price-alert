@@ -1,8 +1,11 @@
 package domain
 
 import (
-	"github.com/pkg/errors"
 	"regexp"
+)
+
+var (
+	SupportedCoins = []string{"BTC", "ETH", "BNB"}
 )
 
 type Alert struct {
@@ -52,14 +55,6 @@ func (a *Alert) GetPrice() float64 {
 	return a.price
 }
 
-func (a *Alert) SetPrice(price float64) {
-	a.price = price
-}
-
-func (a *Alert) SetCoin(coin string) {
-	a.coin = coin
-}
-
 func (a *Alert) GetCoin() string {
 	return a.coin
 }
@@ -68,31 +63,29 @@ func (a *Alert) GetDirection() Direction {
 	return a.direction
 }
 
-func (a *Alert) SetDirection(direction Direction) {
-	a.direction = direction
-}
-
-func (a *Alert) ShouldAlertAtTheGivenPrice(currentPrice float64) bool {
-	if a.direction == DirectionAbove && a.price > currentPrice {
-		return true
-	}
-	if a.direction == DirectionBelow && a.price < currentPrice {
-		return true
-	}
-	return false
-}
-
 func (a *Alert) validate() error {
 	pattern := "^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
 	match, _ := regexp.MatchString(pattern, a.email)
 	if !match {
-		return errors.New("invalid email")
+		return ErrInvalidEmail
 	}
 	if a.direction == DirectionAbove && a.price <= 0 {
-		return errors.New("above price cannot be equal or less than zero")
+		return ErrInvalidPriceAbove
 	}
 	if a.direction == DirectionBelow && a.price <= 0 {
-		return errors.New("below price cannot be equal or less than zero")
+		return ErrInvalidPriceBelow
+	}
+	if !a.coinSupported() {
+		return ErrUnsupportedCoin
 	}
 	return nil
+}
+
+func (a *Alert) coinSupported() bool {
+	for _, coin := range SupportedCoins {
+		if coin == a.coin {
+			return true
+		}
+	}
+	return false
 }
