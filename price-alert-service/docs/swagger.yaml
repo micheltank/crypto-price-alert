@@ -1,0 +1,51 @@
+definitions:
+  presenter.AlertResponse:
+    properties:
+      coin:
+        type: string
+      direction:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      price:
+        type: number
+    type: object
+info:
+  contact: {}
+paths:
+  /alerts:
+    get:
+      description: get an alert by email
+      operationId: create-alert
+      parameters:
+      - description: Email
+        in: query
+        name: email
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.AlertResponse'
+      summary: Create an alert by email
+      tags:
+      - Alerts
+    post:
+      description: Create an alert
+      operationId: create-alert
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/presenter.AlertResponse'
+      summary: Create an alert
+      tags:
+      - Alerts
+swagger: "2.0"

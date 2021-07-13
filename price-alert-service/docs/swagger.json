@@ -1,0 +1,79 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/alerts": {
+            "get": {
+                "description": "get an alert by email",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Alerts"
+                ],
+                "summary": "Create an alert by email",
+                "operationId": "create-alert",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Email",
+                        "name": "email",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/presenter.AlertResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create an alert",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Alerts"
+                ],
+                "summary": "Create an alert",
+                "operationId": "create-alert",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/presenter.AlertResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "presenter.AlertResponse": {
+            "type": "object",
+            "properties": {
+                "coin": {
+                    "type": "string"
+                },
+                "direction": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "price": {
+                    "type": "number"
+                }
+            }
+        }
+    }
+}

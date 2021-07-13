@@ -20,9 +20,12 @@ func NewApp(config infraConfig.Environment) (*App, error) {
 	// di
 	priceApi := infraCryptoCompare.NewCryptoComparePriceApi(config.CryptoCompareApiHost, config.CryptoCompareApiKey)
 	alertApi, err := infraAlert.NewAlertApi(config.PriceAlertServiceHost)
-	notificationBroker, err := infra.NewNotificationBroker()
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to create alert api")
+	}
+	notificationBroker, err := infra.NewNotificationBroker()
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to create notification broker")
 	}
 	alertService := application.NewService(priceApi, alertApi, notificationBroker)
 

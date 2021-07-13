@@ -9,7 +9,6 @@ import (
 )
 
 type AlertApi struct {
-	host   string
 	client pb.AlertHandlerClient
 }
 
@@ -35,7 +34,7 @@ func (a AlertApi) GetAlerts(coin string, price float64) (domain.Alerts, error) {
 	}
 	var alerts domain.Alerts
 	for _, alert := range res.GetAlert() {
-		alerts = append(alerts, ConvertAlertToDomain(*alert))
+		alerts = append(alerts, ConvertAlertToDomain(alert))
 	}
 	return alerts, nil
 }

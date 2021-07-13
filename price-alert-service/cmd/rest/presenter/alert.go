@@ -1,4 +1,4 @@
-package handler
+package presenter
 
 import (
 	"github.com/micheltank/crypto-price-alert/price-alert-service/internal/domain"
@@ -11,7 +11,7 @@ type CreateAlertRequest struct {
 	Direction domain.Direction `json:"direction" binding:"required"`
 }
 
-func (r *CreateAlertRequest) toCommand() domain.CreateAlertCommand {
+func (r *CreateAlertRequest) ToCommand() domain.CreateAlertCommand {
 	return domain.CreateAlertCommand{
 		Email:     r.Email,
 		Price:     r.Price,

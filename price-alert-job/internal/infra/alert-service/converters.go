@@ -5,7 +5,7 @@ import (
 	pb "github.com/micheltank/crypto-price-alert/price-alert-service/cmd/grpc/pb"
 )
 
-func ConvertAlertToDomain(alert pb.Alert) domain.Alert {
+func ConvertAlertToDomain(alert *pb.Alert) domain.Alert {
 	return domain.NewAlert(
 		alert.GetId(),
 		alert.GetEmail(),

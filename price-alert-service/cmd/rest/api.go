@@ -11,6 +11,8 @@ import (
 	"github.com/micheltank/crypto-price-alert/price-alert-service/internal/infra/repository"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
+	"github.com/swaggo/files"
+	"github.com/swaggo/gin-swagger"
 	"net/http"
 	"sync"
 	"time"
@@ -21,6 +23,9 @@ type Api struct {
 	Db         *sql.DB
 }
 
+// NewServer godoc
+// @title Price Alert Service API
+// @version 1.0
 func NewServer(config config.Environment) (*Api, error) {
 	dataSourceName := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", config.DbConfig.User, config.DbConfig.Password, config.DbConfig.Host, config.DbConfig.Port, config.DbConfig.Name)
 	db, err := sql.Open("postgres", dataSourceName)
@@ -40,6 +45,9 @@ func NewServer(config config.Environment) (*Api, error) {
 	// handlers
 	handler.MakeHealthCheckHandler(base)
 	handler.MakeAlertsHandler(v1, alertService)
+
+	// documentation
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	httpServer := &http.Server{Addr: fmt.Sprintf(":%d", config.Port), Handler: router}
 

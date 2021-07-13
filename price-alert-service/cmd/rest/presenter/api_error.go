@@ -1,4 +1,4 @@
-package handler
+package presenter
 
 import (
 	domain2 "github.com/micheltank/crypto-price-alert/price-alert-service/internal/domain"
